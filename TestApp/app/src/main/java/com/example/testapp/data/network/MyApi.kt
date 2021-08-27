@@ -2,8 +2,8 @@ package com.example.testapp.data.network
 
 
 import com.daytranslations.daytrep.constants.Constants
-import com.daytranslations.daytrep.data.network.NetworkConnectionInterceptor
-import com.example.testapp.data.db.entities.Posts
+import com.example.testapp.data.db.entities.Post
+import com.example.testapp.data.db.entities.user.User
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,7 +17,11 @@ import java.util.concurrent.TimeUnit
 interface MyApi {
 
     @GET("posts")
-    suspend fun getPosts() : Response<List<Posts>>
+    suspend fun getPosts() : Response<List<Post>>
+    @GET("users")
+    suspend fun getUsers() : Response<List<User>>
+    @GET("comments")
+    suspend fun getcomments() : Response<List<User>>
 //
 //    @FormUrlEncoded
 //    @POST("getProfile")

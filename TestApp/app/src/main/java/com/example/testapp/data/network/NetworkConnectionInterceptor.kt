@@ -1,11 +1,10 @@
-package com.daytranslations.daytrep.data.network
+package com.example.testapp.data.network
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
-import com.daytranslations.daytrep.utils.LogData
-import com.daytranslations.daytrep.utils.NoInternetException
+import com.example.testapp.exceptions.NoInternetException
+import com.example.testapp.utils.LogData
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor

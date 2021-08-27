@@ -2,14 +2,18 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android.extensions'
 }
 
 android {
+    androidExtensions {
+        experimental = true
+    }
     compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.example.testapp"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -56,10 +60,12 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
     //Android Room
-    implementation "androidx.room:room-runtime:2.2.5"
-    implementation "androidx.room:room-ktx:2.2.5"
+    implementation "androidx.room:room-runtime:2.3.0"
+    implementation "androidx.room:room-ktx:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+
+
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
-    kapt "androidx.room:room-compiler:2.2.5"
 
     //Retrofit and GSON
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'

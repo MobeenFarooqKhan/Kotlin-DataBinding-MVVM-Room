@@ -1,14 +1,17 @@
 package com.example.testapp
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.daytranslations.daytrep.data.network.NetworkConnectionInterceptor
+import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.db.AppDatabase
 import com.example.testapp.data.network.MyApi
 import com.example.testapp.data.repository.PostRepository
+import com.example.testapp.data.repository.UserRepository
+import com.example.testapp.ui.activities.postsDetailActivity.PostDetailViewModelFactory
 import com.example.testapp.ui.activities.postsActivity.PostsViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -39,7 +42,12 @@ class TestApplication  : Application(), KodeinAware, LifecycleObserver {
         bind() from singleton {
             PostRepository(instance(), instance())
         }
+        bind() from singleton {
+            UserRepository(instance(), instance())
+        }
         bind() from provider { PostsViewModelFactory(instance()) }
+        bind() from provider { PostDetailViewModelFactory(instance()) }
+
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {

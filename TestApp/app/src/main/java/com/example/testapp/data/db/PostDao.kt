@@ -5,16 +5,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.testapp.data.db.entities.Posts
+import com.example.testapp.data.db.entities.Post
 
 @Dao
 interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(posts : Posts) : Long
+    suspend fun upsert(posts : List<Post>)
 
     @Query("select * from Posts ORDER BY id")
-    suspend fun getAllPosts(): LiveData<List<Posts>>
+    fun getAllPosts():  LiveData<List<Post>>
 
     @Query("DELETE FROM Posts")
     suspend fun deleteAllPosts()

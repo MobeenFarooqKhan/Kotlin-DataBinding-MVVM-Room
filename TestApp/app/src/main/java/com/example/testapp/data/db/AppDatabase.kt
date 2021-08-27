@@ -4,17 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.testapp.data.db.entities.Posts
+import androidx.room.TypeConverters
+import com.example.testapp.data.db.converters.Converter
+import com.example.testapp.data.db.entities.Post
+import com.example.testapp.data.db.entities.user.User
 
 @Database(
-        entities = [Posts::class],
-        version = 2,
+        entities = [Post::class,User::class],
+        version = 1,
         exportSchema = false
 )
+@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
 
 
     abstract fun getPostDao() : PostDao
+    abstract fun getUserDao() : UserDao
     companion object {
         @Volatile
         private var instanse : AppDatabase? = null
@@ -30,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
         databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "MyDatabase.db"
+                "MyTestDatabase.db"
         ).fallbackToDestructiveMigration().build()
 
     }
