@@ -9,6 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.db.AppDatabase
 import com.example.testapp.data.network.MyApi
+import com.example.testapp.data.repository.CommentsRepository
 import com.example.testapp.data.repository.PostRepository
 import com.example.testapp.data.repository.UserRepository
 import com.example.testapp.ui.activities.postsDetailActivity.PostDetailViewModelFactory
@@ -45,8 +46,11 @@ class TestApplication  : Application(), KodeinAware, LifecycleObserver {
         bind() from singleton {
             UserRepository(instance(), instance())
         }
+        bind() from singleton {
+            CommentsRepository(instance(), instance())
+        }
         bind() from provider { PostsViewModelFactory(instance()) }
-        bind() from provider { PostDetailViewModelFactory(instance()) }
+        bind() from provider { PostDetailViewModelFactory(instance(),instance()) }
 
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_START)

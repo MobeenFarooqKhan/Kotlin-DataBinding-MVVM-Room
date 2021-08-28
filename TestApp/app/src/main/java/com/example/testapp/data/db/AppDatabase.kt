@@ -6,12 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.testapp.data.db.converters.Converter
+import com.example.testapp.data.db.entities.Comment
 import com.example.testapp.data.db.entities.Post
 import com.example.testapp.data.db.entities.user.User
 
 @Database(
-        entities = [Post::class,User::class],
-        version = 1,
+        entities = [Post::class,User::class, Comment::class],
+        version = 2,
         exportSchema = false
 )
 @TypeConverters(Converter::class)
@@ -20,6 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getPostDao() : PostDao
     abstract fun getUserDao() : UserDao
+    abstract fun getCommentsDao() : CommentsDao
     companion object {
         @Volatile
         private var instanse : AppDatabase? = null

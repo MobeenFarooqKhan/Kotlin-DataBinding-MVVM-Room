@@ -10,6 +10,8 @@ import androidx.lifecycle.observe
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Post
 import com.example.testapp.databinding.ActivityPostsDetailBinding
+import com.example.testapp.ui.adapters.CommentRecyclerAdapter
+import com.example.testapp.ui.adapters.PostRecyclerAdapter
 import com.example.testapp.utils.LogData
 import com.example.testapp.utils.isOnline
 import org.kodein.di.KodeinAware
@@ -30,12 +32,23 @@ class PostDetailActivity  : AppCompatActivity() , KodeinAware {
         val viewModel = ViewModelProvider(this, factory).get(PostDetailViewModel::class.java)
         val post = intent.getParcelableExtra<Post>("post")
         binding?.viewModel = viewModel
+        binding?.post = post
         post?.let {
             viewModel.getUser(this,it.userId)
+            viewModel.getComments(this,it.id)
         }
         viewModel.getSelectedUser()?.observe(this, Observer { user ->
             user?.let {
                 LogData("Select user Name is :${user?.name}")
+                binding?.user = user
+            }
+        })
+        val adapter = CommentRecyclerAdapter()
+        binding?.recycler?.adapter = adapter
+        viewModel.getCommentsSpecificToPost()?.observe(this, Observer { comments ->
+            comments?.let {
+                LogData("Number Of Comments is :${comments?.size}")
+                adapter.setCommentList(comments)
             }
         })
     }

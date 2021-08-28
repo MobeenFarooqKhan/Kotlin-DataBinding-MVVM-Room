@@ -2,6 +2,7 @@ package com.example.testapp.data.network
 
 
 import com.daytranslations.daytrep.constants.Constants
+import com.example.testapp.data.db.entities.Comment
 import com.example.testapp.data.db.entities.Post
 import com.example.testapp.data.db.entities.user.User
 
@@ -21,7 +22,7 @@ interface MyApi {
     @GET("users")
     suspend fun getUsers() : Response<List<User>>
     @GET("comments")
-    suspend fun getcomments() : Response<List<User>>
+    suspend fun getcomments() : Response<List<Comment>>
 //
 //    @FormUrlEncoded
 //    @POST("getProfile")
