@@ -14,7 +14,7 @@ interface PostDao {
     suspend fun upsert(posts : List<Post>)
 
     @Query("select * from Posts ORDER BY id")
-    fun getAllPosts():  LiveData<List<Post>>
+    fun getAllPosts():  List<Post>
 
     @Query("DELETE FROM Posts")
     suspend fun deleteAllPosts()

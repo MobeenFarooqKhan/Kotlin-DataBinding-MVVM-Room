@@ -28,15 +28,19 @@ class PostDetailViewModel(
             val users = repository.getLatestUsersFromApi()
             repository.deleteAllUsers()
             repository.saveAllUsers(users)
-            getSpecificUser(id)
+            var filteredUser: User? = users.find { it -> it.id == id }
+            filteredUser?.let {
+                selectedUser?.postValue(it)
+            }
         }
     }
     private fun getCommentsApiCall(postId: Int){
         Coroutines.io {
-            val comments = commentsRepository.getLatestCommentsFromApi()
+            val commentsFromApi = commentsRepository.getLatestCommentsFromApi()
             commentsRepository.deleteAllComments()
-            commentsRepository.saveAllComments(comments)
-            getCommentsSpecificToPost(postId)
+            commentsRepository.saveAllComments(commentsFromApi)
+            var filteredComments: List<Comment> = commentsFromApi.filter { it -> it.postId == postId }
+            comments?.postValue(filteredComments)
         }
     }
     fun getUser(context: Context,userId : Int){

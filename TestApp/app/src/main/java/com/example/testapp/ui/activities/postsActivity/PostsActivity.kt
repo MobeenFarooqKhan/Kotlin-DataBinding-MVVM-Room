@@ -32,14 +32,15 @@ class PostsActivity : AppCompatActivity() , KodeinAware, OnPostClickListener {
         val viewModel = ViewModelProvider(this, factory).get(PostsViewModel::class.java)
         binding?.viewModel = viewModel
 
-        if (isOnline(this)){
-            viewModel.getPostsApiCall()
-        }
+
         val adapter = PostRecyclerAdapter(this)
         binding?.recycler?.adapter = adapter
 
-        viewModel.getPosts()?.observe(this, Observer { posts ->
-            adapter.setPostList(posts)
+        viewModel.getPosts(this)
+        viewModel.getCommentsSpecificToPost()?.observe(this, Observer { posts ->
+            posts?.let {
+                adapter.setPostList(posts)
+            }
         })
     }
     override fun onPostClicked(post: Post) {
