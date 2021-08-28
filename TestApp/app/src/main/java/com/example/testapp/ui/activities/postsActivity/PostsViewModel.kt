@@ -18,10 +18,10 @@ class PostsViewModel(
 ) : ViewModel() {
 
     private var postList = MutableLiveData<List<Post>>()
-    fun getCommentsSpecificToPost(): LiveData<List<Post>?>? {
+    fun postList(): LiveData<List<Post>?>? {
         return postList
     }
-    private fun getPostsApiCall(){
+    fun getPostsApiCall(){
         Coroutines.io {
             val posts = repository.getLatestPostsFromApi()
             deletePosts()
@@ -38,7 +38,7 @@ class PostsViewModel(
             getPostsLocally()
         }
     }
-    private fun getPostsLocally(){
+     fun getPostsLocally(){
         Coroutines.io {
             postList.postValue(repository.getAllPosts())
         }

@@ -37,7 +37,7 @@ class PostsActivity : AppCompatActivity() , KodeinAware, OnPostClickListener {
         binding?.recycler?.adapter = adapter
 
         viewModel.getPosts(this)
-        viewModel.getCommentsSpecificToPost()?.observe(this, Observer { posts ->
+        viewModel.postList()?.observe(this, Observer { posts ->
             posts?.let {
                 adapter.setPostList(posts)
             }

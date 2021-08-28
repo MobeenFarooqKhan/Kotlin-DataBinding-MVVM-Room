@@ -23,7 +23,7 @@ class PostDetailViewModel(
     fun getCommentsSpecificToPost(): LiveData<List<Comment>?>? {
         return comments
     }
-    private fun getUserApiCall(id : Int){
+    fun getUserApiCall(id : Int){
         Coroutines.io {
             val users = repository.getLatestUsersFromApi()
             repository.deleteAllUsers()
@@ -34,7 +34,7 @@ class PostDetailViewModel(
             }
         }
     }
-    private fun getCommentsApiCall(postId: Int){
+     fun getCommentsApiCall(postId: Int){
         Coroutines.io {
             val commentsFromApi = commentsRepository.getLatestCommentsFromApi()
             commentsRepository.deleteAllComments()
