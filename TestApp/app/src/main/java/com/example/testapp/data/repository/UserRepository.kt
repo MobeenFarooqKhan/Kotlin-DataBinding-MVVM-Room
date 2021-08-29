@@ -9,11 +9,22 @@ import com.example.testapp.data.network.SafeApiRequest
 class UserRepository(private val myApi: MyApi,
                       private val myDatabase: AppDatabase
 ): SafeApiRequest() {
-    suspend fun getLatestUsersFromApi() : List<User> {
+    private suspend fun getLatestUsersFromApi() : List<User> {
         return apiRequest { myApi.getUsers() }
     }
-    fun getAllUsers() = myDatabase.getUserDao().getAllUsers()
-    suspend fun getSpecificUsers(id : Int) : User = myDatabase.getUserDao().getSpecificUser(id)
-    suspend fun deleteAllUsers() = myDatabase.getUserDao().deleteAllUsers()
-    suspend fun saveAllUsers(users : List<User>) = myDatabase.getUserDao().upsert(users)
+    private suspend fun getSpecificUsers(id : Int) : User = myDatabase.getUserDao().getSpecificUser(id)
+    private suspend fun deleteAllUsers() = myDatabase.getUserDao().deleteAllUsers()
+    private suspend fun saveAllUsers(users : List<User>) = myDatabase.getUserDao().upsert(users)
+
+    suspend fun getUser(isInternetAvailable : Boolean, userId : Int) : User? {
+        return if (isInternetAvailable) {
+            val users = getLatestUsersFromApi()
+            deleteAllUsers()
+            saveAllUsers(users)
+            users.find {  it.id == userId }
+        }else {
+            getSpecificUsers(userId)
+        }
+    }
+
 }

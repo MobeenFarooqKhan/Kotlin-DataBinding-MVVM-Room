@@ -41,14 +41,13 @@ class PostsDetailViewModelTest : TestCase() {
     @Test
     fun testUserAPiCall(){
         // 1 is the Id of User
-        viewModel.getUserApiCall(id = 1)
+        viewModel.getUser(isInternetAvailable = true,userId = 1)
         observerForUser()
-
     }
     @Test
     fun testCommentAPiCall(){
         // 1 is the id of the post
-        viewModel.getCommentsApiCall(1)
+        viewModel.getComments(isInternetAvailable = true,postId = 1)
         observerForComments()
     }
     private fun observerForComments(){

@@ -35,16 +35,10 @@ class PostsViewModelTest : TestCase() {
 
     @Test
     fun testAPiCall(){
-        viewModel.getPostsApiCall()
+        viewModel.getPosts(isInternetAvailable = true)
         observerForPosts()
 
     }
-    @Test
-    fun getPostsFromLocalDb(){
-        viewModel.getPostsLocally()
-        observerForPosts()
-    }
-
     private fun observerForPosts(){
         Coroutines.main {
             viewModel.postList()?.getOrAwaitValue()?.let { it ->

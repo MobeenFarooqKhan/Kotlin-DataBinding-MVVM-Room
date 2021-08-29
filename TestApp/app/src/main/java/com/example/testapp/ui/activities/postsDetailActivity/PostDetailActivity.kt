@@ -34,12 +34,11 @@ class PostDetailActivity  : AppCompatActivity() , KodeinAware {
         binding?.viewModel = viewModel
         binding?.post = post
         post?.let {
-            viewModel.getUser(this,it.userId)
-            viewModel.getComments(this,it.id)
+            viewModel.getUser(isOnline(this),it.userId)
+            viewModel.getComments(isOnline(this),it.id)
         }
         viewModel.getSelectedUser()?.observe(this, Observer { user ->
             user?.let {
-                LogData("Select user Name is :${user?.name}")
                 binding?.user = user
             }
         })
@@ -47,7 +46,6 @@ class PostDetailActivity  : AppCompatActivity() , KodeinAware {
         binding?.recycler?.adapter = adapter
         viewModel.getCommentsSpecificToPost()?.observe(this, Observer { comments ->
             comments?.let {
-                LogData("Number Of Comments is :${comments?.size}")
                 adapter.setCommentList(comments)
             }
         })

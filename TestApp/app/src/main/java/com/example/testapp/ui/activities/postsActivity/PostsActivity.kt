@@ -36,7 +36,7 @@ class PostsActivity : AppCompatActivity() , KodeinAware, OnPostClickListener {
         val adapter = PostRecyclerAdapter(this)
         binding?.recycler?.adapter = adapter
 
-        viewModel.getPosts(this)
+        viewModel.getPosts(isOnline(this))
         viewModel.postList()?.observe(this, Observer { posts ->
             posts?.let {
                 adapter.setPostList(posts)

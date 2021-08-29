@@ -18,29 +18,14 @@ class PostsViewModel(
 ) : ViewModel() {
 
     private var postList = MutableLiveData<List<Post>>()
+
     fun postList(): LiveData<List<Post>?>? {
         return postList
     }
-    fun getPostsApiCall(){
+    fun getPosts(isInternetAvailable : Boolean) {
         Coroutines.io {
-            val posts = repository.getLatestPostsFromApi()
-            deletePosts()
-            savePosts(posts)
+            val posts = repository.getPosts(isInternetAvailable)
             postList.postValue(posts)
-        }
-    }
-    private suspend fun savePosts(posts : List<Post>) = repository.savePost(posts)
-    private suspend fun deletePosts() = repository.deletePosts()
-    fun getPosts(context: Context) {
-        if (isOnline(context)){
-            getPostsApiCall()
-        }else {
-            getPostsLocally()
-        }
-    }
-     fun getPostsLocally(){
-        Coroutines.io {
-            postList.postValue(repository.getAllPosts())
         }
     }
 }

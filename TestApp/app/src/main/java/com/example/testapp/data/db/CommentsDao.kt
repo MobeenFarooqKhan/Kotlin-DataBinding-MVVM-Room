@@ -14,7 +14,7 @@ interface CommentsDao {
     suspend fun upsert(posts : List<Comment>)
 
     @Query("select * from Comments ORDER BY id")
-    fun getAllComments():  List<Comment>
+    suspend fun getAllComments():  List<Comment>
 
     @Query("DELETE FROM Comments")
     suspend fun deleteAllComments()
